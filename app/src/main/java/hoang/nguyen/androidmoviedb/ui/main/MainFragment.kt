@@ -31,7 +31,9 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerView.adapter = adapter
+        binding.recyclerView.adapter = adapter.apply {
+            withLoadStateFooter(MovieLoadStateAdapter(adapter::retry))
+        }
         viewLifecycleOwner.lifecycleScope.launch {
             vm.pagedMovies.collectLatest { pagingData ->
                 adapter.submitData(pagingData)
