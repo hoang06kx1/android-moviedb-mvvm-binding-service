@@ -8,6 +8,7 @@ fun MovieListResponse.MovieItemResponse.toMovieItemModel(): MovieItemModel {
         this.id,
         this.title,
         this.posterPath.orEmpty().asPosterUrl(),
+        this.backdropPath.orEmpty().asBackdropUrl(),
         this.overview.orEmpty(),
         this.popularity,
         this.voteAverage,

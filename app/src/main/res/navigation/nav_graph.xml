@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="hoang.nguyen.androidmoviedb.ui.main.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="hoang.nguyen.androidmoviedb.ui.detail.MovieDetailFragment"
+        android:label="MovieDetailFragment" />
 </navigation>

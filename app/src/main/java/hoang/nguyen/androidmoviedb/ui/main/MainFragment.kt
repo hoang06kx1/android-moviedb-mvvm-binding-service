@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import coil.imageLoader
+import hoang.nguyen.androidmoviedb.R
 import hoang.nguyen.androidmoviedb.databinding.MainFragmentBinding
 import hoang.nguyen.androidmoviedb.ui.components.viewLifecycle
 import kotlinx.coroutines.flow.collectLatest
@@ -15,8 +18,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainFragment : Fragment() {
     private val vm: MainViewModel by viewModel()
     private var binding: MainFragmentBinding by viewLifecycle()
-    var adapter = MovieAdapter {
-        // TODO
+    private var adapter = MovieAdapter {
+        findNavController().navigate(
+            R.id.action_mainFragment_to_movieDetailFragment,
+            Bundle().apply {
+                putParcelable("MOVIE", it)
+            })
     }
 
     override fun onCreateView(

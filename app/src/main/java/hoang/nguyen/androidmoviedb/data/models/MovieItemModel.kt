@@ -9,6 +9,7 @@ data class MovieItemModel(
     var id: Int,
     var title: String,
     var posterPath: String,
+    var backdropPath: String,
     var overview: String,
     var popularity: Double,
     var voteAverage: Double,
