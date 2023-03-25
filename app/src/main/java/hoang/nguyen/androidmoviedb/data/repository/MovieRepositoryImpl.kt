@@ -2,10 +2,10 @@ package hoang.nguyen.androidmoviedb.data.repository
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import dev.hyuwah.moviedbexplorer.data.remote.model.MovieListResponse
+import hoang.nguyen.androidmoviedb.data.remote.response.MovieListResponse
 import hoang.nguyen.androidmoviedb.data.remote.ApiService
 import hoang.nguyen.androidmoviedb.data.remote.NetworkResult
-import hoang.nguyen.androidmoviedb.data.remote.entity.ApiErrorResponse
+import hoang.nguyen.androidmoviedb.data.remote.response.ApiErrorResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
@@ -37,7 +37,11 @@ class MovieRepositoryImpl(private val gson: Gson, private val apiService: ApiSer
         }
     }
 
-    override suspend fun getPopularMovies(page: Int): Flow<NetworkResult<MovieListResponse>> {
-        return fetchResult { apiService.getPopularMovies(page) }
+    override suspend fun fetchPopularMovies(page: Int): Flow<NetworkResult<MovieListResponse>> {
+        return fetchResult { apiService.fetchPopularMovies(page) }
+    }
+
+    override fun getMoviePagingSource(): ListMoviePagingSource {
+        return ListMoviePagingSource(apiService)
     }
 }

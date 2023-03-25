@@ -1,4 +1,4 @@
-package dev.hyuwah.moviedbexplorer.data.remote.model
+package hoang.nguyen.androidmoviedb.data.remote.response
 
 
 import com.google.gson.annotations.SerializedName

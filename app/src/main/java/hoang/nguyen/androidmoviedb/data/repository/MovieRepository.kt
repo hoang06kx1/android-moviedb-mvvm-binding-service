@@ -1,10 +1,10 @@
 package hoang.nguyen.androidmoviedb.data.repository
 
-import dev.hyuwah.moviedbexplorer.data.remote.model.MovieListResponse
+import hoang.nguyen.androidmoviedb.data.remote.response.MovieListResponse
 import hoang.nguyen.androidmoviedb.data.remote.NetworkResult
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
 
 interface MovieRepository {
-    suspend fun getPopularMovies(page: Int): Flow<NetworkResult<MovieListResponse>>
+    suspend fun fetchPopularMovies(page: Int): Flow<NetworkResult<MovieListResponse>>
+    fun getMoviePagingSource(): ListMoviePagingSource
 }
