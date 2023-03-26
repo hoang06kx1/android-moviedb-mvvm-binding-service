@@ -3,8 +3,8 @@ package hoang.nguyen.androidmoviedb.di
 import com.google.gson.Gson
 import hoang.nguyen.androidmoviedb.BuildConfig
 import hoang.nguyen.androidmoviedb.data.remote.ApiConstants.API_BASE_URL
-import hoang.nguyen.androidmoviedb.data.remote.ApiService
-import hoang.nguyen.androidmoviedb.data.repository.ListMoviePagingSource
+import hoang.nguyen.androidmoviedb.data.remote.BoundApiService
+import hoang.nguyen.androidmoviedb.data.remote.MovieApiService
 import hoang.nguyen.androidmoviedb.data.repository.MovieRepository
 import hoang.nguyen.androidmoviedb.data.repository.MovieRepositoryImpl
 import hoang.nguyen.androidmoviedb.ui.main.MainViewModel
@@ -43,17 +43,22 @@ val appModule = module {
             .build()
     }
 
-    // Retrofit
-    single {
+    // MovieApiServiceImpl : OkHttp Implementation of MovieApiService
+    single<MovieApiService>(named("OkHttp")) {
         val retrofit = Retrofit.Builder()
             .baseUrl(API_BASE_URL)
             .client(get())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        retrofit.create(ApiService::class.java)
+        retrofit.create(MovieApiService::class.java)
     }
 
-    single<MovieRepository> { MovieRepositoryImpl(Gson(), get()) }
+    // MovieApiServiceImpl : BoundService implementation
+    single<MovieApiService>(named("BoundService")) {
+        BoundApiService()
+    }
+
+    single<MovieRepository> { MovieRepositoryImpl(Gson(), get(named("OkHttp"))) }
 
     viewModel { MainViewModel(get<MovieRepository>()) }
 }

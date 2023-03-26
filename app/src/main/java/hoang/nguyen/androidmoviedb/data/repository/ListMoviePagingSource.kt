@@ -4,11 +4,10 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import hoang.nguyen.androidmoviedb.data.models.MovieItemModel
 import hoang.nguyen.androidmoviedb.data.models.toMovieItemModel
-import hoang.nguyen.androidmoviedb.data.remote.response.MovieListResponse
-import hoang.nguyen.androidmoviedb.data.remote.ApiService
+import hoang.nguyen.androidmoviedb.data.remote.MovieApiService
 
 class ListMoviePagingSource(
-    private val apiService: ApiService,
+    private val movieApiService: MovieApiService,
 ) : PagingSource<Int, MovieItemModel>() {
     override suspend fun load(
         params: LoadParams<Int>
@@ -16,7 +15,7 @@ class ListMoviePagingSource(
         try {
             // Start refresh at page 1 if undefined.
             val nextPageNumber = params.key ?: 1
-            val response = apiService.fetchPopularMovies(nextPageNumber)
+            val response = movieApiService.fetchPopularMovies(nextPageNumber)
             return if (response.isSuccessful) {
                 val body = response.body()!!
                 LoadResult.Page(

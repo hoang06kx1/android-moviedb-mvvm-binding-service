@@ -5,7 +5,10 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface ApiService {
+interface MovieApiService {
     @GET("movie/popular?region=US")
     suspend fun fetchPopularMovies(@Query("page") page: Int): Response<MovieListResponse>
+
+//    @GET("movie/{movieId}")
+//    fun getMovieDetails(@Path("movieId") movieId: Int): Deferred<NetworkResponse<MovieResponse, ErrorResponse>>
 }
