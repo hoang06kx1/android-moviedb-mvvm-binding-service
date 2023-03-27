@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".data.remote.ServiceComponent"/>
+        <service android:name=".data.remote.ApiAndroidService"/>
     </application>
 
 </manifest>

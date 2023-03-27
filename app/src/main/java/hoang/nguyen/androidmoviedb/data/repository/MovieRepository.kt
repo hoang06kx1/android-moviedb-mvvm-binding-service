@@ -5,6 +5,6 @@ import hoang.nguyen.androidmoviedb.data.remote.NetworkResult
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    suspend fun fetchPopularMovies(page: Int): Flow<NetworkResult<MovieListResponse>>
+    suspend fun fetchMovieDetail(movieId: Int): Flow<NetworkResult<MovieListResponse.MovieItemResponse>>
     fun getMoviePagingSource(): ListMoviePagingSource
 }

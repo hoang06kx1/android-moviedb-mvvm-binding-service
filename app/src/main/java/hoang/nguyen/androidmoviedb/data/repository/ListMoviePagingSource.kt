@@ -1,10 +1,12 @@
 package hoang.nguyen.androidmoviedb.data.repository
 
+import android.accounts.NetworkErrorException
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import hoang.nguyen.androidmoviedb.data.models.MovieItemModel
 import hoang.nguyen.androidmoviedb.data.models.toMovieItemModel
 import hoang.nguyen.androidmoviedb.data.remote.MovieApiService
+import okio.IOException
 
 class ListMoviePagingSource(
     private val movieApiService: MovieApiService,
@@ -33,7 +35,9 @@ class ListMoviePagingSource(
                     )
                 )
             }
-        } catch (e: Exception) {
+        } catch (e: IOException) {
+            return LoadResult.Error(e)
+        } catch (e: NetworkErrorException) {
             return LoadResult.Error(e)
         }
     }

@@ -4,28 +4,31 @@ import android.app.Service
 import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
-import android.util.Log
 import hoang.nguyen.androidmoviedb.data.remote.response.MovieListResponse
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import retrofit2.Response
 import java.lang.ref.WeakReference
 
-class ServiceComponent : Service() {
+class ApiAndroidService : Service(), MovieApiService {
     init {
         INSTANCE = WeakReference(this)
     }
 
-    private val okHttpServiceImpl: MovieApiService by inject(named("OkHttp"))
+    private val apiService: MovieApiService by inject(named("OkHttp"))
 
     // Binder given to clients.
     private val binder = LocalBinder()
 
     /** Method for clients.  */
-    suspend fun fetchPopularMovies(page: Int): Response<MovieListResponse> {
-        Log.d("DEV", "Begin to fetch poupar movies $page")
-        return okHttpServiceImpl.fetchPopularMovies(page)
+    override suspend fun fetchPopularMovies(page: Int): Response<MovieListResponse> {
+        return apiService.fetchPopularMovies(page)
     }
+
+    override suspend fun fetchMovieDetail(movieId: Int): Response<MovieListResponse.MovieItemResponse> {
+        return apiService.fetchMovieDetail(movieId)
+    }
+
 
     /**
      * Class used for the client Binder. Because we know this service always
@@ -41,6 +44,6 @@ class ServiceComponent : Service() {
     }
 
     companion object {
-        var INSTANCE: WeakReference<ServiceComponent> = WeakReference(null)
+        var INSTANCE: WeakReference<ApiAndroidService> = WeakReference(null)
     }
 }

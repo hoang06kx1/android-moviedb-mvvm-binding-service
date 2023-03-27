@@ -37,8 +37,8 @@ class MovieRepositoryImpl(private val gson: Gson, private val movieApiService: M
         }
     }
 
-    override suspend fun fetchPopularMovies(page: Int): Flow<NetworkResult<MovieListResponse>> {
-        return fetchResult { movieApiService.fetchPopularMovies(page) }
+    override suspend fun fetchMovieDetail(movieId: Int): Flow<NetworkResult<MovieListResponse.MovieItemResponse>> {
+        return fetchResult { movieApiService.fetchMovieDetail(movieId) }
     }
 
     override fun getMoviePagingSource(): ListMoviePagingSource {

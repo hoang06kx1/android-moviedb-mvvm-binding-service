@@ -1,58 +1,38 @@
 package hoang.nguyen.androidmoviedb.ui.main
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import hoang.nguyen.androidmoviedb.R
-import hoang.nguyen.androidmoviedb.data.remote.BoundApiService
 import hoang.nguyen.androidmoviedb.databinding.MainFragmentBinding
+import hoang.nguyen.androidmoviedb.ui.AutoBindingFragment
 import hoang.nguyen.androidmoviedb.ui.components.viewLifecycle
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment() {
+class MainFragment : AutoBindingFragment() {
     private val vm: MainViewModel by viewModel()
     private var binding: MainFragmentBinding by viewLifecycle()
+    var isViewCreated = MutableStateFlow(false)
+    var isServiceConnected = MutableStateFlow(false)
+
     private var adapter = MovieAdapter {
         findNavController().navigate(
             R.id.action_mainFragment_to_movieDetailFragment,
             Bundle().apply {
-                putParcelable("MOVIE", it)
+                putInt("MOVIE_ID", it.id)
             })
     }
 
-    /** Defines callbacks for service binding, passed to bindService().  */
-    private val connection = object : ServiceConnection {
-
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            Log.d("H.NH", "Connect service successfully")
-        }
-
-        override fun onServiceDisconnected(arg0: ComponentName) {
-            Log.d("H.NH", "Failed Connect service successfully")
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Intent(requireContext(), BoundApiService::class.java).also { intent ->
-            requireActivity().bindService(intent, connection, Context.BIND_AUTO_CREATE)
-        }
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-        requireActivity().unbindService(connection)
+    override val onServiceConnection: (service: IBinder) -> Unit = {
+        isServiceConnected.value = true
     }
 
     override fun onCreateView(
@@ -67,12 +47,21 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        isViewCreated.value = true
         binding.recyclerView.adapter = adapter.apply {
             withLoadStateFooter(MovieLoadStateAdapter(adapter::retry))
         }
         viewLifecycleOwner.lifecycleScope.launch {
-            vm.pagedMovies.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
+            // Pager will fetch data automatically when there is a collector
+            // So only collect data when View is ready && SERVICE BOUND
+            isViewCreated.combine(isServiceConnected) { viewCreated, serviceConnected ->
+                viewCreated && serviceConnected
+            }.collect { bothCreated ->
+                if (bothCreated) {
+                    vm.pagedMovies.collectLatest { pagingData ->
+                        adapter.submitData(pagingData)
+                    }
+                }
             }
         }
     }
