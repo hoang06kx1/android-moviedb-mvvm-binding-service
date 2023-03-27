@@ -9,7 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import hoang.nguyen.androidmoviedb.R
 import hoang.nguyen.androidmoviedb.databinding.MainFragmentBinding
-import hoang.nguyen.androidmoviedb.ui.AutoBindingFragment
+import hoang.nguyen.androidmoviedb.ui.base.AutoBindingFragment
 import hoang.nguyen.androidmoviedb.ui.components.viewLifecycle
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest

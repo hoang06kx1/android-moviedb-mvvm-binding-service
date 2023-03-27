@@ -1,11 +1,6 @@
 package hoang.nguyen.androidmoviedb.ui.detail
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
-import hoang.nguyen.androidmoviedb.data.repository.ListMoviePagingSource
 import hoang.nguyen.androidmoviedb.data.repository.MovieRepository
 import kotlinx.coroutines.flow.*
 

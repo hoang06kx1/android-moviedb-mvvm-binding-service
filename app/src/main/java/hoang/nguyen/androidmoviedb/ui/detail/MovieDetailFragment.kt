@@ -5,15 +5,15 @@ import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import hoang.nguyen.androidmoviedb.data.models.toMovieItemModel
 import hoang.nguyen.androidmoviedb.data.remote.NetworkResult
 import hoang.nguyen.androidmoviedb.databinding.MovieDetailFragmentBinding
-import hoang.nguyen.androidmoviedb.ui.AutoBindingFragment
+import hoang.nguyen.androidmoviedb.ui.base.AutoBindingFragment
 import hoang.nguyen.androidmoviedb.ui.components.viewLifecycle
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,12 +41,16 @@ class MovieDetailFragment : AutoBindingFragment() {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
                 viewModel.movie.collect {
                     when (it) {
-                        is NetworkResult.Loading -> {}
+                        is NetworkResult.Loading -> {
+                            toggleLoading(true)
+                        }
                         is NetworkResult.Success -> {
+                            toggleLoading(false)
                             binding.movie = it.data!!.toMovieItemModel()
                         }
                         is NetworkResult.Error -> {
-
+                            toggleLoading(false)
+                            Toast.makeText(requireActivity(), it.message, Toast.LENGTH_LONG).show()
                         }
                     }
                 }

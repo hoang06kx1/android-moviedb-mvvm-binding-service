@@ -1,4 +1,4 @@
-package hoang.nguyen.androidmoviedb.ui
+package hoang.nguyen.androidmoviedb.ui.base
 
 import android.content.ComponentName
 import android.content.Context
@@ -33,5 +33,9 @@ abstract class AutoBindingFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         requireActivity().unbindService(connection)
+    }
+
+    protected fun toggleLoading(isShow: Boolean) {
+        (requireActivity() as LoadingComponent).toggleLoading(isShow)
     }
 }
