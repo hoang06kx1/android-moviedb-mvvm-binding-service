@@ -11,10 +11,6 @@ import retrofit2.Response
 import java.lang.ref.WeakReference
 
 class ApiAndroidService : Service(), MovieApiService {
-    init {
-        INSTANCE = WeakReference(this)
-    }
-
     private val apiService: MovieApiService by inject(named("OkHttp"))
 
     // Binder given to clients.
@@ -36,7 +32,7 @@ class ApiAndroidService : Service(), MovieApiService {
      */
     inner class LocalBinder : Binder() {
         // Return this instance of LocalService so clients can call public methods.
-        // fun getService(): BoundApiService = this@BoundApiService
+        fun getService(): ApiAndroidService = this@ApiAndroidService
     }
 
     override fun onBind(intent: Intent): IBinder {

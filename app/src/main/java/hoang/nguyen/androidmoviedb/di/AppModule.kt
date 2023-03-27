@@ -3,7 +3,7 @@ package hoang.nguyen.androidmoviedb.di
 import com.google.gson.Gson
 import hoang.nguyen.androidmoviedb.BuildConfig
 import hoang.nguyen.androidmoviedb.data.remote.ApiConstants.API_BASE_URL
-import hoang.nguyen.androidmoviedb.data.remote.BoundMovieApiServiceImpl
+import hoang.nguyen.androidmoviedb.data.remote.MovieApiServiceImpl
 import hoang.nguyen.androidmoviedb.data.remote.MovieApiService
 import hoang.nguyen.androidmoviedb.data.repository.MovieRepository
 import hoang.nguyen.androidmoviedb.data.repository.MovieRepositoryImpl
@@ -56,7 +56,7 @@ val appModule = module {
 
     // MovieApiServiceImpl : BoundService implementation
     single<MovieApiService>(named("BoundService")) {
-        BoundMovieApiServiceImpl()
+        MovieApiServiceImpl()
     }
 
     // Passed bound service API wrapper instead of OkHttp implementation

@@ -8,13 +8,19 @@ import android.os.Bundle
 import android.os.IBinder
 import androidx.fragment.app.Fragment
 import hoang.nguyen.androidmoviedb.data.remote.ApiAndroidService
+import java.lang.ref.WeakReference
 
-abstract class AutoBindingFragment : Fragment() {
+/***
+ * Base fragment which auto bind to ApiAndroidService when it is created and unbind when it is destroyed
+ */
+abstract class ServiceBindingFragment : Fragment() {
     abstract val onServiceConnection: (service: IBinder) -> Unit
 
     /** Defines callbacks for service binding */
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            ApiAndroidService.INSTANCE =
+                WeakReference((service as ApiAndroidService.LocalBinder).getService())
             onServiceConnection(service)
         }
 

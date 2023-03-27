@@ -1,4 +1,4 @@
-package hoang.nguyen.androidmoviedb.ui.components
+package hoang.nguyen.androidmoviedb.ui.base
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*

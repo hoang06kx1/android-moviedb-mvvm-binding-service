@@ -12,12 +12,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import hoang.nguyen.androidmoviedb.data.models.toMovieItemModel
 import hoang.nguyen.androidmoviedb.data.remote.NetworkResult
 import hoang.nguyen.androidmoviedb.databinding.MovieDetailFragmentBinding
-import hoang.nguyen.androidmoviedb.ui.base.AutoBindingFragment
-import hoang.nguyen.androidmoviedb.ui.components.viewLifecycle
+import hoang.nguyen.androidmoviedb.ui.base.ServiceBindingFragment
+import hoang.nguyen.androidmoviedb.ui.base.viewLifecycle
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieDetailFragment : AutoBindingFragment() {
+class MovieDetailFragment : ServiceBindingFragment() {
     private val viewModel: MovieDetailViewModel by viewModel()
     private var binding: MovieDetailFragmentBinding by viewLifecycle()
 

@@ -9,15 +9,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import hoang.nguyen.androidmoviedb.R
 import hoang.nguyen.androidmoviedb.databinding.MainFragmentBinding
-import hoang.nguyen.androidmoviedb.ui.base.AutoBindingFragment
-import hoang.nguyen.androidmoviedb.ui.components.viewLifecycle
+import hoang.nguyen.androidmoviedb.ui.base.ServiceBindingFragment
+import hoang.nguyen.androidmoviedb.ui.base.viewLifecycle
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : AutoBindingFragment() {
+class MainFragment : ServiceBindingFragment() {
     private val vm: MainViewModel by viewModel()
     private var binding: MainFragmentBinding by viewLifecycle()
     var isViewCreated = MutableStateFlow(false)

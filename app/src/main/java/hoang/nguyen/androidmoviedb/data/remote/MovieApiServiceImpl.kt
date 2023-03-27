@@ -7,7 +7,7 @@ import retrofit2.Response
  * A wrapper class around Android service component which is responsible for making Network Requests
  * The service should be bound before calling any API request, otherwise a exception will be thrown
  */
-class BoundMovieApiServiceImpl : MovieApiService {
+class MovieApiServiceImpl : MovieApiService {
     private val assertIsServiceAvailable by lazy {
         ApiAndroidService.INSTANCE.get() ?: throw Exception("Bound API Service is not bound yet!")
     }
