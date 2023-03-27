@@ -33,4 +33,18 @@ class MovieAdapter(
         }
     }
 
+
+    companion object {
+        // Define Loading ViewType
+        const val LOADING_ITEM = 0
+
+        // Define Movie ViewType
+        const val MOVIE_ITEM = 1
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        // set ViewType
+        return if (position == itemCount) MOVIE_ITEM else LOADING_ITEM
+    }
+
 }
